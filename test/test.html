@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test post</title>
+    <script src="jquery-3.4.1.min.js"></script>
+    <script src="md5.min.js"></script>
+</head>
+<body>
+<input type="text" id="username" placeholder="用户名" value="xz">
+<input type="text" id="pwd" placeholder="密码" value="123">
+<button id="btn">登录</button>
+<script>
+    const secretConstant = 'HONGhxzqXINQ3571!%*$0793yaba87^%';
+
+    const timeStr =  new Date().getTime();
+
+    const randomStr = 'xxxxx';
+
+    const tmp = timeStr + secretConstant + randomStr;
+    console.log(tmp)
+    const md5str = md5(tmp).toUpperCase();
+
+    btn.onclick = function () {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('pwd').value;
+        $.ajax({
+            url: 'http://39.98.230.3:3000/login',
+            type: 'POST',
+            headers: {
+                timeStr,
+                randomStr,
+                md5Str: md5str,
+                'Content-type': 'application/json'
+            },
+            data: JSON.stringify({
+                username,
+                password,
+                tmp
+            })
+        })
+    }
+</script>
+</body>
+</html>
